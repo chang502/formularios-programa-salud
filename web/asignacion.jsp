@@ -36,18 +36,17 @@
     </head>
     <body>
 
-
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" action="inscribir" method="POST">
 				<span class="contact100-form-title">
 					Asignación de Disciplina
 				</span>
-				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select"  data-validate="Seleccione una opción">
 					<span class="label-input100">Tipo documento *</span>
 					<div>
-						<select class="js-select2" name="service" placeholder="Seleccione una opci&oacute;n" required >
-							<option> </option>
+						<select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="tipo_documento">
+							<option disabled selected value style="display:none"> Seleccione </option>
 							<%= new utils.DBManager().getTiposDocumento()%>
 						</select>
 						<div class="dropDownSelect2"></div>
@@ -55,30 +54,30 @@
 				</div>
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
 					<span class="label-input100">Número documento *</span>
-					<input class="input100" type="text" name="numero" placeholder="Ingrese la numeración del documento">
+					<input class="input100" type="number" min="1" max="999999999999999999" name="numero_documento" placeholder="Ingrese la numeración del documento">
 				</div>
 
 				<div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "Ingrese su correo electrónico (ejemplo@dominio.com)">
 					<span class="label-input100">Correo Electrónico *</span>
-					<input class="input100" type="text" name="email" placeholder="Ingrese su correo electrónico ">
+					<input class="input100" type="text" name="correo" placeholder="Ingrese su correo electrónico ">
 				</div>
 
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese el peso en libras">
 					<span class="label-input100">Peso *</span>
-					<input class="input100" type="text" name="peso" placeholder="Peso (lbs)">
+					<input class="input100" type="number" min="1" max="1000" name="peso" placeholder="Peso (lbs)">
 				</div>
 
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese la estatura en metros">
 					<span class="label-input100">Estatura *</span>
-					<input class="input100" type="text" name="estatura" placeholder="Estatura (mts)">
+					<input class="input100" type="number" step="0.01" min="0.01" max="4" name="estatura" placeholder="Estatura (mts)">
 				</div>
                                                 
                                                 
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
 					<span class="label-input100">&iquest;Posee capacidades especiales o alguna enfermedad que lo obligue a utilizar silla de ruedas, muletas, bastón, ayuda auditiva, medicamentos u otro equipo especial&quest; *</span>
 					<div>
-						<select class="js-selectdisc" name="service">
-							<option>Seleccione</option>
+						<select class="js-selectdisc" placeholder="Seleccione una opci&oacute;n" required name="cualidades">
+							<option disabled selected value style="display:none">Seleccione</option>
                                                         <option value="1">S&iacute;</option>
                                                         <option value="0">No</option>
 						</select>
@@ -91,10 +90,10 @@
                                                 
                                 <div class="dis-none rs1-wrap-input100 bg1 wrap-input100 js-show-service">
                                     <div class=" validate-input bg1 input100-select">
-                                            <span class="label-input100">Discapacidad</span>
+                                            <span class="label-input100">Tipo de Cualidad Especial</span>
                                             <div>
-                                                    <select class="js-select2" name="service">
-                                                            <option>Seleccione</option>
+                                                    <select class="js-select2" id="selectDisciplina" placeholder="Seleccione una opci&oacute;n" name="tipo_cualidad">
+                                                            <option selected disabled hidden>Seleccione</option>
                                                             <%= new utils.DBManager().getTiposDiscapacidad()%>
                                                     </select>
                                                     <div class="dropDownSelect2"></div>
@@ -106,8 +105,8 @@
                                 <div class="wrap-input100 validate-input bg1 input100-select">
                                         <span class="label-input100">Disciplina *</span>
                                         <div>
-                                                <select class="js-select2" name="service">
-                                                        <option>Seleccione</option>
+                                                <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="disciplina">
+                                                        <option disabled selected value style="display:none">Seleccione</option>
                                                         <%= new utils.DBManager().getDisciplinas()%>
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
@@ -125,7 +124,6 @@
 			</form>
 		</div>
 	</div>
-
 
 
 <!--===============================================================================================-->
@@ -170,10 +168,18 @@
 				$(this).on('select2:close', function (e){
 					if($(this).val() != 1) {
 						$('.js-show-service').slideUp();
+                                                $("[name='tipo_cualidad']").prop("required", false);
+                                                $("[name='tipo_cualidad']").attr("required", false);
+                                                $("[name='tipo_cualidad']").prop("selected", false);
+                                                $("[name='tipo_cualidad']").val("Seleccione").trigger('change');
 					}
 					else {
 						$('.js-show-service').slideUp();
 						$('.js-show-service').slideDown();
+                                                $("[name='tipo_cualidad']").prop("required", true);
+                                                $("[name='tipo_cualidad']").attr("required", true);
+                                                $("[name='tipo_cualidad']").prop("selected", false);
+                                                $("[name='tipo_cualidad']").val("Seleccione").trigger('change');
 					}
 				});
 			});

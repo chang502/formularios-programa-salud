@@ -94,8 +94,9 @@ input {
 
 input[type="number"] {
     -moz-appearance: textfield;
-    appearance: none;
-    -webkit-appearance: none;
+    /*text-align: right;
+    /*appearance: none;
+    -webkit-appearance: none;*/
 }
 
 input[type="number"]::-webkit-outer-spin-button,

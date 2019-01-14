@@ -28,7 +28,7 @@
             <div id="main-container">
                 <p><h1>Asignaci&oacute;n de Disciplinas para Deportes</h1></p>
             
-                <form method="POST" action="inscribir" id="inscribirform">
+                <form method="GET" action="inscribir" id="inscribirform">
                     <table>
                         <tr>
                             <td><p id="tipodoc">Tipo de documento</p></td>

@@ -59,7 +59,7 @@ public class inscribir extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.sendRedirect("index.jsp");
+        //response.sendRedirect("index.jsp");
     }
 
     /**
@@ -83,7 +83,7 @@ public class inscribir extends HttpServlet {
         String tipo_discapacidad = request.getParameter("tipo_cualidad");
 
         String query = "INSERT INTO estudiante_deportes (id_tipo_documento,numero_documento,email,peso,estatura,cualidades_especiales,id_tipo_discapacidad,id_disciplina,activo) VALUES ("
-                + tipo_documento + ",'" + numero_documento + "','" + correo.toLowerCase() + "'," + peso + "," + estatura + ","+tipo_discapacidad+"," + (cualidades.equals("1") ? "true" : "false") + "," + disciplina + ",true);";
+                + tipo_documento + ",'" + numero_documento + "','" + correo.toLowerCase() + "'," + peso + "," + estatura + "," + (cualidades.equals("1") ? "true" : "false")+"," +tipo_discapacidad + "," + disciplina + ",true);";
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
