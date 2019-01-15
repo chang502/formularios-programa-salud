@@ -50,7 +50,11 @@ public class DBManager {
 
         try {
 
-            ResultSet rs = getResultSet("SELECT id_disciplina, nombre FROM disciplina WHERE activo AND semestre=CONCAT(IF(MONTH(NOW())<7,1,2),'S',YEAR(NOW())) ORDER BY nombre");
+            ResultSet rs = getResultSet("SELECT d.id_disciplina, d.nombre, count(ed.id_disciplina), d.limite, d.semestre FROM disciplina d\n" +
+"left join estudiante_deportes ed on d.id_disciplina = ed.id_disciplina\n" +
+"WHERE d.activo and coalesce(ed.activo,true) and  d.semestre=CONCAT(IF(MONTH(NOW())<7,1,2),'S',YEAR(NOW()))\n" +
+"group by d.id_disciplina, d.nombre, d.limite, d.semestre having count(ed.id_disciplina)<d.limite\n" +
+"ORDER BY d.nombre;");
 
             StringBuilder sb = new StringBuilder();
             while (rs.next()) {

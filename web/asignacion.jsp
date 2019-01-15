@@ -36,8 +36,10 @@
     </head>
     <body>
 
-	<div class="container-contact100">
-		<div class="wrap-contact100">
+            <div class="container-contact100">
+		<div class="wrap-contact100"><div class="wrap-contact100-header">
+                        <div id="logo"><p>Departamento de Deportes</p></div>
+                    </div>
 			<form class="contact100-form validate-form" action="inscribir" method="POST">
 				<span class="contact100-form-title">
 					Asignación de Disciplina
@@ -141,19 +143,6 @@
 				minimumResultsForSearch: 20,
 				dropdownParent: $(this).next('.dropDownSelect2')
 			});
-
-/*
-			$(".js-select2").each(function(){
-				$(this).on('select2:close', function (e){
-					if($(this).val() == "Seleccione") {
-						$('.js-show-service').slideUp();
-					}
-					else {
-						$('.js-show-service').slideUp();
-						$('.js-show-service').slideDown();
-					}
-				});
-			});*/
 		})
                 
                 
