@@ -123,6 +123,7 @@
 						</span>
 					</button>
 				</div>
+                                                <a href="index.jsp" class="wrap-contact100-form-range">Regresar</a>
 			</form>
 		</div>
 	</div>
