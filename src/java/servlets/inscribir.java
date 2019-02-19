@@ -59,7 +59,7 @@ public class inscribir extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.sendRedirect("index.jsp");
+        //response.sendRedirect("index.jsp");
     }
 
     /**
@@ -75,15 +75,15 @@ public class inscribir extends HttpServlet {
             throws ServletException, IOException {
         String tipo_documento = request.getParameter("tipo_documento");
         String numero_documento = request.getParameter("numero_documento");
-        String peso = request.getParameter("peso");
         String correo = request.getParameter("correo");
+        String peso = request.getParameter("peso");
         String estatura = request.getParameter("estatura");
         String cualidades = request.getParameter("cualidades");
-        String disciplina = request.getParameter("disciplina");
         String tipo_discapacidad = request.getParameter("tipo_cualidad");
+        String disciplina = request.getParameter("disciplina");
 
-        String query = "INSERT INTO estudiante_deportes (id_tipo_documento,numero_documento,email,peso,estatura,cualidades_especiales,id_tipo_discapacidad,id_disciplina,activo) VALUES ("
-                + tipo_documento + ",'" + numero_documento + "','" + correo.toLowerCase() + "'," + peso + "," + estatura + ","+tipo_discapacidad+"," + (cualidades.equals("1") ? "true" : "false") + "," + disciplina + ",true);";
+        String query = "INSERT INTO estudiante_deportes (semestre, id_tipo_documento,numero_documento,email,peso,estatura,cualidades_especiales,id_tipo_discapacidad,id_disciplina,activo) VALUES (CONCAT(IF(MONTH(NOW())<7,1,2),'S',YEAR(NOW())),"
+                + tipo_documento + ",'" + numero_documento + "','" + correo.toLowerCase() + "'," + peso + "," + estatura + "," + (cualidades.equals("1") ? "true" : "false")+"," +(cualidades.equals("1")? tipo_discapacidad : "null")+ "," + disciplina + ",true);";
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -91,21 +91,23 @@ public class inscribir extends HttpServlet {
 
             utils.DBManager dbm = new utils.DBManager();
 
-            /* TODO output your page here. You may use following sample code. */
+            /*
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Resultado de Inscripción</title>");
             out.println("<link href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\"/>");
             out.println("</head>");
-            out.println("<body>");
-            if (dbm.inscribir(query)) {
+            out.println("<body>");*/
+            int id_estudiante_deportes = dbm.inscribir( tipo_documento,  numero_documento,  correo,  peso,  estatura,  cualidades,  tipo_discapacidad,  disciplina);
+            if (id_estudiante_deportes>0) {
                 out.println("<h1>Inscripción Satisfactoria</h1>");
+                response.sendRedirect("success.jsp?id="+id_estudiante_deportes);
             } else {
                 out.println("<h1>Inscripción Erronea</h1>");
             }
-            out.println("</body>");
-            out.println("</html>");
+            /*out.println("</body>");
+            out.println("</html>");*/
         } catch (Exception e) {
             e.printStackTrace(out);
         }
