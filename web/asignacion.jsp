@@ -58,12 +58,89 @@
 					<span class="label-input100">Número documento *</span>
 					<input class="input100" type="number" min="1" max="999999999999999999" name="numero_documento" placeholder="Ingrese la numeración del documento">
 				</div>
+                                                
+                                                
+                                            
+                                          
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese un nombre válido">
+					<span class="label-input100">Primer Nombre *</span>
+					<input class="input100" type="text" name="primer_nombre" placeholder="Primer Nombre">
+				</div>
+                                                
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Segundo Nombre</span>
+					<input class="input100" type="text" name="primer_nombre" placeholder="Segundo Nombre">
+				</div>
+
+
+                                                
+                                                
+                                                
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese un apellido válido">
+					<span class="label-input100">Primer Apellido *</span>
+					<input class="input100" type="text" name="primer_nombre" placeholder="Primer Apellido">
+				</div>
+                                                
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Segundo Apellido</span>
+					<input class="input100" type="text" name="primer_nombre" placeholder="Segundo Apellido">
+				</div>
+
+
+                                                
+                                                
+                                                
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese una fecha válida">
+					<span class="label-input100">Fecha Nacimiento *</span>
+					<input class="input100" type="date" name="primer_nombre" placeholder="dd/mm/yyyy">
+				</div>
+                                                
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
+					<span class="label-input100">Sexo *</span>
+					<div>
+						<select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="cualidades">
+							<option disabled selected value style="display:none">Seleccione</option>
+                                                        <option value="F">Femenino</option>
+                                                        <option value="M">Masculino</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
 
 				<div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "Ingrese su correo electrónico (ejemplo@dominio.com)">
 					<span class="label-input100">Correo Electrónico *</span>
 					<input class="input100" type="text" name="correo" placeholder="Ingrese su correo electrónico ">
 				</div>
 
+                                                
+                                                
+                                                
+                                                
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese un numero de teléfono">
+					<span class="label-input100">Teléfono</span>
+					<input class="input100" type="number" min="10000000" max="99999999" name="telefono" placeholder="Teléfono">
+				</div>    
+                                                
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese un numero de teléfono">
+					<span class="label-input100">Teléfono de emergencia</span>
+					<input class="input100" type="number" min="10000000" max="99999999" name="telefono" placeholder="Teléfono">
+				</div>
+                                                
+                                                
+                                                
+                                                
+                                                
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese el peso en libras">
 					<span class="label-input100">Peso *</span>
 					<input class="input100" type="number" min="1" max="1000" name="peso" placeholder="Peso (lbs)">

@@ -46,114 +46,58 @@ public class DBManager {
 
     }
 
-    public String getDisciplinas() {
-
-        try {
-
-            ResultSet rs = getResultSet("SELECT d.id_disciplina, d.nombre, count(ed.id_disciplina), d.limite, d.semestre FROM disciplina d\n"
-                    + "left join estudiante_deportes ed on d.id_disciplina = ed.id_disciplina\n"
-                    + "WHERE d.activo and coalesce(ed.activo,true) and  d.semestre=CONCAT(IF(MONTH(NOW())<7,1,2),'S',YEAR(NOW()))\n"
-                    + "group by d.id_disciplina, d.nombre, d.limite, d.semestre having count(ed.id_disciplina)<d.limite\n"
-                    + "ORDER BY d.nombre;");
-
-            StringBuilder sb = new StringBuilder();
-            while (rs.next()) {
-
-                sb.append("<option value=\"");
-                sb.append(rs.getInt("id_disciplina")).append("\">");
-                sb.append(rs.getString("nombre")).append("</option>\n");
-            }
-
-            return sb.toString();
-        } catch (Exception e) {
-            return "";
-        }
-
-    }
-
     public String getTiposDocumento() {
-        try {
-
-            ResultSet rs = getResultSet("SELECT id_tipo_documento, nombre FROM tipo_documento WHERE activo ORDER BY nombre");
-
-            StringBuilder sb = new StringBuilder();
-            while (rs.next()) {
-
-                sb.append("<option value=\"");
-                sb.append(rs.getInt("id_tipo_documento")).append("\">");
-                sb.append(rs.getString("nombre")).append("</option>\n");
-            }
-
-            return sb.toString();
-        } catch (Exception e) {
-            return "";
-        }
+        return getOptionsForSelect("get_student_document_types","id_tipo_documento","nombre");
     }
 
     public String getTiposDiscapacidad() {
+        return getOptionsForSelect("get_disability_types","id_tipo_discapacidad","nombre");
+    }
+
+    public String getDisciplinas() {
+        return getOptionsForSelect("get_active_disciplines","id_disciplina","nombre");
+    }
+
+    private String getOptionsForSelect(String procedure_name, String value, String text) {
         try {
 
-            ResultSet rs = getResultSet("SELECT t.id_tipo_discapacidad, t.nombre FROM tipo_discapacidad t WHERE t.activo ORDER BY 1");
+            ResultSet rs = callGetProcedure(procedure_name);
 
             StringBuilder sb = new StringBuilder();
             while (rs.next()) {
 
                 sb.append("<option value=\"");
-                sb.append(rs.getInt("id_tipo_discapacidad")).append("\">");
-                sb.append(rs.getString("nombre")).append("</option>\n");
+                sb.append(rs.getInt(value)).append("\">");
+                sb.append(rs.getString(text)).append("</option>\n");
             }
 
             return sb.toString();
         } catch (Exception e) {
-            return "";
+            return "<option value=\"\"></option>\n";
         }
     }
 
-    /* public boolean inscribir(String query){
-
-        try{
-        PreparedStatement ps=conn.prepareStatement(query);
-
-        int resp=ps.executeUpdate();
-        return resp>0;
-        } catch(Exception e){
-            e.printStackTrace(System.out);
-            return false;
-        }
-
-        String tipo_documento = request.getParameter("tipo_documento");
-        String numero_documento = request.getParameter("numero_documento");
-        String correo = request.getParameter("correo");
-        String peso = request.getParameter("peso");
-        String estatura = request.getParameter("estatura");
-        String cualidades = request.getParameter("cualidades");
-        String tipo_discapacidad = request.getParameter("tipo_cualidad");
-        String disciplina = request.getParameter("disciplina");
-    
-    }*/
     public int inscribir(String tipo_documento, String numero_documento, String correo, String peso, String estatura, String cualidades, String tipo_discapacidad, String disciplina) {
 
         try {
-            
+
             java.util.Map<String, String> params = new java.util.HashMap<>();
-            params.put("id_tipo_documento",tipo_documento);
-            params.put("numero_documento",numero_documento);
-            params.put("email",correo);
-            params.put("peso",peso);
-            params.put("estatura",estatura);
-            params.put("cualidades_especiales",cualidades);
-            params.put("id_tipo_discapacidad",tipo_discapacidad);
-            params.put("id_disciplina",disciplina);
-            
+            params.put("id_tipo_documento", tipo_documento);
+            params.put("numero_documento", numero_documento);
+            params.put("email", correo);
+            params.put("peso", peso);
+            params.put("estatura", estatura);
+            params.put("cualidades_especiales", cualidades);
+            params.put("id_tipo_discapacidad", tipo_discapacidad);
+            params.put("id_disciplina", disciplina);
+
             String fields[] = {"id_tipo_documento", "numero_documento", "email", "peso", "estatura", "cualidades_especiales", "id_tipo_discapacidad", "id_disciplina"};
-            
-            
+
             java.sql.CallableStatement result = callResultProcedure("assign_discipline", params, fields);
-            
-            
-            int id_estudiante_deportes=result.getInt(fields.length + 1);
-            String mensaje=result.getString(fields.length+2);
-            
+
+            int id_estudiante_deportes = result.getInt(fields.length + 1);
+            String mensaje = result.getString(fields.length + 2);
+
             if (id_estudiante_deportes > 0) {
 
             }
@@ -163,6 +107,20 @@ public class DBManager {
             e.printStackTrace(System.out);
             return -1;
         }
+
+    }
+
+    private ResultSet callGetProcedure(String procedure_name) throws Exception {
+
+        String query = "{ call " + procedure_name + "() }";
+
+        CallableStatement stmt = conn.prepareCall(query);
+
+        if (stmt.execute()) {
+            return stmt.getResultSet();
+        }
+
+        return null;
 
     }
 

@@ -36,7 +36,7 @@
     <body>
         
             <div class="container-contact100">
-		<div class="wrap-contact100"><div class="wrap-contact100-header">
+		<div class="wrap-contact100" style="height: 100vh;"><div class="wrap-contact100-header">
                         <div id="logo"><p>Departamento de Deportes</p></div>
                     </div>
 			<form class="contact100-form validate-form" action="inscribir" method="POST">
