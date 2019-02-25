@@ -82,9 +82,8 @@ public class inscribir extends HttpServlet {
         String tipo_discapacidad = request.getParameter("tipo_cualidad");
         String disciplina = request.getParameter("disciplina");
 
-        String query = "INSERT INTO estudiante_deportes (semestre, id_tipo_documento,numero_documento,email,peso,estatura,cualidades_especiales,id_tipo_discapacidad,id_disciplina,activo) VALUES (CONCAT(IF(MONTH(NOW())<7,1,2),'S',YEAR(NOW())),"
-                + tipo_documento + ",'" + numero_documento + "','" + correo.toLowerCase() + "'," + peso + "," + estatura + "," + (cualidades.equals("1") ? "true" : "false")+"," +(cualidades.equals("1")? tipo_discapacidad : "null")+ "," + disciplina + ",true);";
-
+        
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
