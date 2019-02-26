@@ -46,7 +46,7 @@ public class inscribir extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -73,14 +73,26 @@ public class inscribir extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String tipo_documento = request.getParameter("tipo_documento");
-        String numero_documento = request.getParameter("numero_documento");
-        String correo = request.getParameter("correo");
-        String peso = request.getParameter("peso");
-        String estatura = request.getParameter("estatura");
-        String cualidades = request.getParameter("cualidades");
-        String tipo_discapacidad = request.getParameter("tipo_cualidad");
-        String disciplina = request.getParameter("disciplina");
+        
+        
+        String cui = request.getParameter("");
+        String nov = request.getParameter("");
+        String nombre = request.getParameter("");
+        String apellido = request.getParameter("");
+        String fecha_nacimiento = request.getParameter("");
+        String sexo = request.getParameter("");
+        String email = request.getParameter("");
+        String telefono = request.getParameter("");
+        String telefono_emergencia = request.getParameter("");
+        String contacto_emergencia = request.getParameter("");
+        String carrera = request.getParameter("");
+        String peso = request.getParameter("");
+        String estatura = request.getParameter("");
+        String cualidades_especiales = request.getParameter("");
+        String id_tipo_discapacidad = request.getParameter("");
+        
+        
+
 
         
         
@@ -98,7 +110,16 @@ public class inscribir extends HttpServlet {
             out.println("<link href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\"/>");
             out.println("</head>");
             out.println("<body>");*/
-            int id_estudiante_deportes = dbm.inscribir( tipo_documento,  numero_documento,  correo,  peso,  estatura,  cualidades,  tipo_discapacidad,  disciplina);
+            
+            
+            
+            
+            int id_estudiante_deportes = 1;//dbm.inscribir( tipo_documento,  numero_documento,  correo,  peso,  estatura,  cualidades,  tipo_discapacidad,  disciplina);
+            
+            
+            
+            
+            
             if (id_estudiante_deportes>0) {
                 out.println("<h1>Inscripción Satisfactoria</h1>");
                 response.sendRedirect("success.jsp?id="+id_estudiante_deportes);
@@ -120,6 +141,6 @@ public class inscribir extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
