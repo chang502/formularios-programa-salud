@@ -50,6 +50,10 @@ public class DBManager {
         return getOptionsForSelect("get_student_document_types","id_tipo_documento","nombre");
     }
 
+    public String getCarreras() {
+        return getOptionsForSelect("get_carreras_for_select","carrera","nombre");
+    }
+
     public String getTiposDiscapacidad() {
         return getOptionsForSelect("get_disability_types","id_tipo_discapacidad","nombre");
     }
@@ -77,27 +81,64 @@ public class DBManager {
         }
     }
 
-    public int inscribir(String tipo_documento, String numero_documento, String correo, String peso, String estatura, String cualidades, String tipo_discapacidad, String disciplina) {
+    public int inscribir(String cui,String nov,String nombre,String apellido,String fecha_nacimiento,String sexo,String email,String telefono,String telefono_emergencia,
+            String contacto_emergencia,String carrera,String peso,String estatura,String cualidades_especiales,String id_tipo_discapacidad,String id_disciplina) {
 
         try {
 
+            
+            /*
+String cui,
+String nov,
+String nombre,
+String apellido,
+String fecha_nacimiento,
+String sexo,
+String email,
+String telefono,
+String telefono_emergencia,
+String contacto_emergencia,
+String carrera,
+String peso,
+String estatura,
+String cualidades_especiales,
+String id_tipo_discapacidad,
+String id_disciplina,
+        
+            */
             java.util.Map<String, String> params = new java.util.HashMap<>();
-            params.put("id_tipo_documento", tipo_documento);
-            params.put("numero_documento", numero_documento);
-            params.put("email", correo);
-            params.put("peso", peso);
-            params.put("estatura", estatura);
-            params.put("cualidades_especiales", cualidades);
-            params.put("id_tipo_discapacidad", tipo_discapacidad);
-            params.put("id_disciplina", disciplina);
+            params.put("cui",cui);
+            params.put("nov",nov);
+            params.put("nombre",nombre);
+            params.put("apellido",apellido);
+            params.put("fecha_nacimiento",fecha_nacimiento);
+            params.put("sexo",sexo);
+            params.put("email",email);
+            params.put("telefono",telefono);
+            params.put("telefono_emergencia",telefono_emergencia);
+            params.put("contacto_emergencia",contacto_emergencia);
+            params.put("carrera",carrera);
+            params.put("peso",peso);
+            params.put("estatura",estatura);
+            //params.put("cualidades_especiales",cualidades_especiales);
+            params.put("id_tipo_discapacidad",id_tipo_discapacidad);
+            params.put("id_disciplina",id_disciplina);
 
-            String fields[] = {"id_tipo_documento", "numero_documento", "email", "peso", "estatura", "cualidades_especiales", "id_tipo_discapacidad", "id_disciplina"};
+            String fields[] = {"cui","nov","nombre","apellido","fecha_nacimiento",
+                "sexo","email","telefono","telefono_emergencia","contacto_emergencia",
+                "carrera","peso","estatura",
+                //"cualidades_especiales",
+                "id_tipo_discapacidad",
+                "id_disciplina"};
 
             java.sql.CallableStatement result = callResultProcedure("assign_discipline", params, fields);
 
             int id_estudiante_deportes = result.getInt(fields.length + 1);
             String mensaje = result.getString(fields.length + 2);
-
+            
+            System.out.println("o_result: "+id_estudiante_deportes);
+            System.out.println("mensaje asignación: "+mensaje);
+            
             if (id_estudiante_deportes > 0) {
 
             }

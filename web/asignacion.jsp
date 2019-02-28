@@ -75,21 +75,9 @@
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
                         <span class="label-input100">Carrera *</span>
                         <div>
-                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="cualidades">
+                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="carrera">
                                 <option disabled selected value style="display:none">Seleccione</option>
-                                <option value="01">01 Ing. Civil</option>
-                                <option value="02">02 Ing. Química</option>
-                                <option value="03">03 Ing. Mecánica</option>
-                                <option value="04">04 Ing. Eléctrica</option>
-                                <option value="05">05 Ing. Industrial</option>
-                                <option value="06">06 Ing. Mec. Eléctrica</option>
-                                <option value="07">07 Ing. Mec. Industrial</option>
-                                <option value="09">09 Ing. Ciencias y Sis.</option>
-                                <option value="10">10 Lic. Mat. Aplicada</option>
-                                <option value="12">12 Lic. Fís. Aplicada</option>
-                                <option value="13">13 Ing. Electrónica</option>
-                                <option value="15">15 Ing. Agroindustrial</option>
-                                <option value="35">35 Ing. Ambiental</option>
+                                <%= new utils.DBManager().getCarreras()%>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
@@ -103,13 +91,13 @@
 
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese una fecha válida">
                         <span class="label-input100">Fecha Nacimiento *</span>
-                        <input class="input100" type="date" name="primer_nombre" placeholder="dd/mm/yyyy">
+                        <input class="input100" type="date" name="fecha_nacimiento" placeholder="dd/mm/yyyy">
                     </div>
 
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
                         <span class="label-input100">Sexo *</span>
                         <div>
-                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="cualidades">
+                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="sexo">
                                 <option disabled selected value style="display:none">Seleccione</option>
                                 <option value="F">Femenino</option>
                                 <option value="M">Masculino</option>
@@ -132,7 +120,7 @@
 
                     <div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "Ingrese su correo electrónico (ejemplo@dominio.com)">
                         <span class="label-input100">Correo Electrónico *</span>
-                        <input class="input100" type="text" name="correo" placeholder="Ingrese su correo electrónico ">
+                        <input class="input100" type="text" name="email" placeholder="Ingrese su correo electrónico ">
                     </div>
 
 
@@ -148,13 +136,13 @@
 
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese un numero de teléfono">
                         <span class="label-input100">Teléfono de emergencia</span>
-                        <input class="input100" type="number" min="10000000" max="99999999" name="telefono" placeholder="Teléfono de emergencia">
+                        <input class="input100" type="number" min="10000000" max="99999999" name="telefono_emergencia" placeholder="Teléfono de emergencia">
                     </div>
 
 
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese un nombre">
                         <span class="label-input100">Contacto de emergencia *</span>
-                        <input class="input100" type="text" name="nombre" placeholder="Nombre del contacto">
+                        <input class="input100" type="text" name="contacto_emergencia" placeholder="Nombre del contacto">
                     </div>
 
 
@@ -174,7 +162,7 @@
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
                         <span class="label-input100">&iquest;Posee capacidades especiales o alguna enfermedad que lo obligue a utilizar silla de ruedas, muletas, bastón, ayuda auditiva, medicamentos u otro equipo especial&quest; *</span>
                         <div>
-                            <select class="js-selectdisc" placeholder="Seleccione una opci&oacute;n" required name="cualidades">
+                            <select class="js-selectdisc" placeholder="Seleccione una opci&oacute;n" required name="cualidades_especiales">
                                 <option disabled selected value style="display:none">Seleccione</option>
                                 <option value="1">S&iacute;</option>
                                 <option value="0">No</option>
@@ -190,7 +178,7 @@
                         <div class=" validate-input bg1 input100-select">
                             <span class="label-input100">Tipo de Cualidad Especial</span>
                             <div>
-                                <select class="js-select2" id="selectDisciplina" placeholder="Seleccione una opci&oacute;n" name="tipo_cualidad">
+                                <select class="js-select2" id="selectDisciplina" placeholder="Seleccione una opci&oacute;n" name="id_tipo_discapacidad">
                                     <option selected disabled hidden>Seleccione</option>
                                     <%= new utils.DBManager().getTiposDiscapacidad()%>
                                 </select>
@@ -203,7 +191,7 @@
                     <div class="wrap-input100 validate-input bg1 input100-select">
                         <span class="label-input100">Disciplina *</span>
                         <div>
-                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="disciplina">
+                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="id_disciplina">
                                 <option disabled selected value style="display:none">Seleccione</option>
                                 <%= new utils.DBManager().getDisciplinas()%>
                             </select>

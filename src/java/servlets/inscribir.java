@@ -74,22 +74,22 @@ public class inscribir extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        String cui = request.getParameter("");
-        String nov = request.getParameter("");
-        String nombre = request.getParameter("");
-        String apellido = request.getParameter("");
-        String fecha_nacimiento = request.getParameter("");
-        String sexo = request.getParameter("");
-        String email = request.getParameter("");
-        String telefono = request.getParameter("");
-        String telefono_emergencia = request.getParameter("");
-        String contacto_emergencia = request.getParameter("");
-        String carrera = request.getParameter("");
-        String peso = request.getParameter("");
-        String estatura = request.getParameter("");
-        String cualidades_especiales = request.getParameter("");
-        String id_tipo_discapacidad = request.getParameter("");
+        String cui = request.getParameter("cui");
+        String nov = request.getParameter("nov");
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String fecha_nacimiento = request.getParameter("fecha_nacimiento");
+        String sexo = request.getParameter("sexo");
+        String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
+        String telefono_emergencia = request.getParameter("telefono_emergencia");
+        String contacto_emergencia = request.getParameter("contacto_emergencia");
+        String carrera = request.getParameter("carrera");
+        String peso = request.getParameter("peso");
+        String estatura = request.getParameter("estatura");
+        String cualidades_especiales = request.getParameter("cualidades_especiales");
+        String id_tipo_discapacidad = request.getParameter("id_tipo_discapacidad");
+        String id_disciplina = request.getParameter("id_disciplina");
         
         
 
@@ -102,19 +102,9 @@ public class inscribir extends HttpServlet {
 
             utils.DBManager dbm = new utils.DBManager();
 
-            /*
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Resultado de Inscripción</title>");
-            out.println("<link href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-            out.println("</head>");
-            out.println("<body>");*/
-            
-            
-            
-            
-            int id_estudiante_deportes = 1;//dbm.inscribir( tipo_documento,  numero_documento,  correo,  peso,  estatura,  cualidades,  tipo_discapacidad,  disciplina);
+            int id_estudiante_deportes = dbm.inscribir( cui,nov,nombre,apellido,fecha_nacimiento,sexo,
+                    email,telefono,telefono_emergencia,contacto_emergencia,carrera,peso,estatura,
+                    cualidades_especiales,id_tipo_discapacidad,id_disciplina);
             
             
             
