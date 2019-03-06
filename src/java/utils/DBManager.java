@@ -20,6 +20,10 @@ public class DBManager {
     private static final String password = "progsalud";
 
     private static Connection conn;
+    
+    public int id_asignacion;
+    public String mensaje;
+    
 
     public DBManager() {
         connect();
@@ -51,7 +55,23 @@ public class DBManager {
     }
 
     public String getCarreras() {
-        return getOptionsForSelect("get_carreras_for_select","carrera","nombre");
+        //return getOptionsForSelect("get_carreras_for_select","carrera","nombre");
+                try {
+
+            ResultSet rs = callGetProcedure("get_carreras_for_select");
+
+            StringBuilder sb = new StringBuilder();
+            while (rs.next()) {
+
+                sb.append("<option value=\"");
+                sb.append(rs.getString("carrera")).append("\">");
+                sb.append(rs.getString("nombre")).append("</option>\n");
+            }
+
+            return sb.toString();
+        } catch (Exception e) {
+            return "<option value=\"\"></option>\n";
+        }
     }
 
     public String getTiposDiscapacidad() {
@@ -120,30 +140,34 @@ String id_disciplina,
             params.put("carrera",carrera);
             params.put("peso",peso);
             params.put("estatura",estatura);
-            //params.put("cualidades_especiales",cualidades_especiales);
+            params.put("flag_tiene_discapacidad",cualidades_especiales);
             params.put("id_tipo_discapacidad",id_tipo_discapacidad);
             params.put("id_disciplina",id_disciplina);
 
+            System.out.println("carrera: "+params.get("carrera"));
+            
             String fields[] = {"cui","nov","nombre","apellido","fecha_nacimiento",
                 "sexo","email","telefono","telefono_emergencia","contacto_emergencia",
                 "carrera","peso","estatura",
-                //"cualidades_especiales",
+                "flag_tiene_discapacidad",
                 "id_tipo_discapacidad",
                 "id_disciplina"};
 
             java.sql.CallableStatement result = callResultProcedure("assign_discipline", params, fields);
 
             int id_estudiante_deportes = result.getInt(fields.length + 1);
-            String mensaje = result.getString(fields.length + 2);
+            String msj = result.getString(fields.length + 2);
             
-            System.out.println("o_result: "+id_estudiante_deportes);
-            System.out.println("mensaje asignación: "+mensaje);
+            //System.out.println("o_result: "+id_estudiante_deportes);
+            //System.out.println("mensaje asignación: "+mensaje);
+            this.mensaje = msj;
             
             if (id_estudiante_deportes > 0) {
 
             }
 
-            return id_estudiante_deportes;
+            this.id_asignacion=id_estudiante_deportes;
+            return this.id_asignacion;
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return -1;

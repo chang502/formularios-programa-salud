@@ -115,6 +115,7 @@ public class inscribir extends HttpServlet {
                 response.sendRedirect("success.jsp?id="+id_estudiante_deportes);
             } else {
                 out.println("<h1>Inscripción Erronea</h1>");
+                out.println("<p>"+dbm.mensaje+"</p>");
             }
             /*out.println("</body>");
             out.println("</html>");*/
