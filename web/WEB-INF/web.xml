@@ -12,6 +12,10 @@
         <servlet-name>tipodocumento</servlet-name>
         <servlet-class>servlets.tipodocumento</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>estudiante</servlet-name>
+        <servlet-class>servlets.estudiante</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>inscribir</servlet-name>
         <url-pattern>/inscribir</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>tipodocumento</servlet-name>
         <url-pattern>/tipodocumento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>estudiante</servlet-name>
+        <url-pattern>/estudiante</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

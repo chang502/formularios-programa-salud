@@ -1,6 +1,6 @@
 <%-- 
-    Document   : inscripcion
-    Created on : Jan 11, 2019, 11:21:56 AM
+    Document   : estudiante
+    Created on : Mar 14, 2019, 5:57:10 PM
     Author     : Andres
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Asignación de disciplina</title>
+        <title>Formulario de Datos de Estudiante</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -38,36 +38,20 @@
 
         <div class="container-contact100">
             <div class="wrap-contact100"><div class="wrap-contact100-header">
-                    <div id="logo"><p>Departamento de Deportes</p></div>
+                    <div id="logo"><p>Programa Salud FIUSAC</p></div>
                 </div>
-                <form class="contact100-form validate-form" action="inscribir" method="POST">
+                <form class="contact100-form validate-form" action="estudiante" method="POST">
                     <span class="contact100-form-title">
-                        Asignación de Disciplina
+                        Formulario de Datos de Estudiantes
                     </span>
+                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
+                        <span class="label-input100">Carnet *</span>
+                        <input class="input100" type="number" min="200000000" max="299999999" name="carnet" placeholder="Número de Orientación Vocacional">
+                    </div>
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
                         <span class="label-input100">CUI *</span>
                         <input class="input100" type="number" min="1000000000000" max="9999999999999" name="cui" placeholder="CUI">
                     </div>
-                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
-                        <span class="label-input100">Número de Orientación Vocacional *</span>
-                        <input class="input100" type="number" min="2000000000" max="2999999999" name="nov" placeholder="Número de Orientación Vocacional">
-                    </div>
-
-
-
-
-
-                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese su nombre">
-                        <span class="label-input100">Nombres *</span>
-                        <input class="input100" type="text" name="nombre" placeholder="Nombres">
-                    </div>
-
-                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese su apellido">
-                        <span class="label-input100">Apellidos *</span>
-                        <input class="input100" type="text" name="apellido" placeholder="Apellido">
-                    </div>
-
-
 
 
 
@@ -94,18 +78,6 @@
                         <input class="input100" type="date" name="fecha_nacimiento" placeholder="dd/mm/yyyy">
                     </div>
 
-                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
-                        <span class="label-input100">Sexo *</span>
-                        <div>
-                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="sexo">
-                                <option disabled selected value style="display:none">Seleccione</option>
-                                <option value="F">Femenino</option>
-                                <option value="M">Masculino</option>
-                            </select>
-                            <div class="dropDownSelect2"></div>
-                        </div>
-                    </div>
-
 
 
 
@@ -118,10 +90,6 @@
 
 
 
-                    <div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "Ingrese su correo electrónico (ejemplo@dominio.com)">
-                        <span class="label-input100">Correo Electrónico *</span>
-                        <input class="input100" type="text" name="email" placeholder="Ingrese su correo electrónico ">
-                    </div>
 
 
 
@@ -136,11 +104,11 @@
 
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese un numero de teléfono">
                         <span class="label-input100">Teléfono de emergencia</span>
-                        <input class="input100" type="number" min="10000000" max="99999999" name="telefono_emergencia" placeholder="Teléfono de emergencia">
+                        <input class="input100" type="number" min="10000000" max="99999999" name="telefono_emergencia" placeholder="Teléfono de emergencia"  maxlength="8">
                     </div>
 
 
-                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Ingrese un nombre">
+                    <div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "Ingrese un nombre">
                         <span class="label-input100">Contacto de emergencia *</span>
                         <input class="input100" type="text" name="contacto_emergencia" placeholder="Nombre del contacto">
                     </div>
@@ -186,14 +154,16 @@
                             </div>
                         </div>
                     </div>
+                                
+                                
 
 
                     <div class="wrap-input100 validate-input bg1 input100-select">
-                        <span class="label-input100">Disciplina *</span>
+                        <span class="label-input100">¿Padece de alguna enfermedad crónica? *</span>
                         <div>
-                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="id_disciplina">
-                                <option disabled selected value style="display:none">Seleccione</option>
-                                <%= new utils.DBManager().getDisciplinas()%>
+                            <select class="js-select2" placeholder="Seleccione una opci&oacute;n" required name="id_tipo_enfermedad">
+                                
+                                <%= new utils.DBManager().getTiposEnfermedad()%>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
@@ -202,7 +172,7 @@
                     <div class="container-contact100-form-btn">
                         <button class="contact100-form-btn">
                             <span>
-                                Asignar
+                                Guardar
                                 <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
                             </span>
                         </button>
