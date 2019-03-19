@@ -46,7 +46,8 @@
                     </span>
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
                         <span class="label-input100">Carnet *</span>
-                        <input class="input100" type="number" min="200000000" max="299999999" name="carnet" placeholder="Número de Orientación Vocacional">
+                        <input class="input100" type="number" min="200000000" max="299999999" name="carnet" 
+                               placeholder="Número de Orientación Vocacional" <%= request.getParameter("carnet")!=null?("value=\""+request.getParameter("carnet")+"\""):"" %>>
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
                         <span class="label-input100">CUI *</span>
