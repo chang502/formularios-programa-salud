@@ -230,7 +230,14 @@ iframe {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+  font-family: Montserrat-Medium;
   justify-content: space-between;
+}
+
+.contact100-form-text {
+  width: 100%;
+  text-align: center;
+  font-family: Montserrat-Medium;
 }
 
 .contact100-form-title {

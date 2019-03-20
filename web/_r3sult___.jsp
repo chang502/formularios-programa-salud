@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Oct 2, 2018, 12:28:55 PM
+    Document   : _r3sult___
+    Created on : Mar 15, 2019, 1:34:52 AM
     Author     : Andres
 --%>
 
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Programa de Salud FIUSAC - Inicio</title>
+        <title>Programa de Salud FIUSAC - <%= request.getAttribute("title") %></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -41,8 +41,8 @@
                     </div>
 			<form class="contact100-form validate-form" action="inscribir" method="POST">
 
-                                    <a href="deportes.jsp" class="contact100-form-title">Asignación de Disciplina</a>
-                                    <a href="estudiante.jsp" class="contact100-form-title">Formulario de datos de Estudiantes</a>
+                            <p class="contact100-form-title"><%= request.getAttribute("title") %></p>
+                                    <p style="width:100%; text-align: center !important;" class="contact100-form-text"><%= request.getAttribute("message") %></p>
 
 				
 			</form>

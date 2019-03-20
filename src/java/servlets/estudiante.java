@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andres
  */
-@WebServlet(name = "inscribir", urlPatterns = {"/inscribir"})
-public class inscribir extends HttpServlet {
+@WebServlet(name = "estudiante", urlPatterns = {"/estudiante"})
+public class estudiante extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,16 +37,15 @@ public class inscribir extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet inscribir</title>");
+            out.println("<title>Servlet estudiante</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet inscribir at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet estudiante at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -58,8 +57,7 @@ public class inscribir extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //response.sendRedirect("index.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -73,29 +71,20 @@ public class inscribir extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        String carnet = request.getParameter("carnet");
         String cui = request.getParameter("cui");
-        String nov = request.getParameter("nov");
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
+        String carrera = request.getParameter("carrera");
         String fecha_nacimiento = request.getParameter("fecha_nacimiento");
-        String sexo = request.getParameter("sexo");
-        String email = request.getParameter("email");
+       
         String telefono = request.getParameter("telefono");
         String telefono_emergencia = request.getParameter("telefono_emergencia");
         String contacto_emergencia = request.getParameter("contacto_emergencia");
-        String carrera = request.getParameter("carrera");
         String peso = request.getParameter("peso");
         String estatura = request.getParameter("estatura");
         String cualidades_especiales = request.getParameter("cualidades_especiales");
         String id_tipo_discapacidad = request.getParameter("id_tipo_discapacidad");
         String id_tipo_enfermedad = request.getParameter("id_tipo_enfermedad");
-        String id_disciplina = request.getParameter("id_disciplina");
-        
-        
-
-
-        
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -103,18 +92,13 @@ public class inscribir extends HttpServlet {
 
             utils.DBManager dbm = new utils.DBManager();
 
-            int id_estudiante_deportes = dbm.inscribir( cui,nov,nombre,apellido,fecha_nacimiento,sexo,
-                    email,telefono,telefono_emergencia,contacto_emergencia,carrera,peso,estatura,
-                    cualidades_especiales,id_tipo_discapacidad,id_tipo_enfermedad,id_disciplina);
-            
-            
-            
-            
-            
-            if (id_estudiante_deportes>0) {
-                request.setAttribute("title", "Inscripción Satisfactoria");
-                request.setAttribute("message", "Su constancia de inscripción es: "+id_estudiante_deportes);
-                request.getRequestDispatcher("_r3sult___.jsp").include(request, response);
+            int id_persona = dbm.actualizarDatosEstudiante(carnet, cui, carrera, fecha_nacimiento, 
+                    telefono, telefono_emergencia, contacto_emergencia, peso, estatura,
+                    cualidades_especiales, id_tipo_discapacidad, id_tipo_enfermedad);
+
+            if (id_persona > 0) {
+                out.println("<h1>Ingreso Satisfactorio</h1>");
+                response.sendRedirect("success.jsp?id=" + id_persona);
             } else {
                 request.setAttribute("title", "Ingreso Erróneo");
                 request.setAttribute("message", dbm.mensaje);
