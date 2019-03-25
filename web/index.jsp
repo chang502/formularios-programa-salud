@@ -11,41 +11,17 @@
         <title>Programa de Salud FIUSAC - Inicio</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/noui/nouislider.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
     </head>
     <body>
         
             <div class="container-contact100">
-		<div class="wrap-contact100" style="height: 100vh;"><div class="wrap-contact100-header">
-                        <div id="logo"><p>Programa de Salud FIUSAC</p></div>
+		<div class="wrap-contact100" ><div class="wrap-contact100-header">
+                        <div id="logo" style="margin-top: 50px;"><p>Programa de Salud Facultad de Ingeniería</p></div>
                     </div>
-			<form class="contact100-form validate-form" action="inscribir" method="POST">
-
-                                    <a href="deportes.jsp" class="contact100-form-title">Asignación de Disciplina</a>
-                                    <a href="estudiante.jsp" class="contact100-form-title">Formulario de datos de Estudiantes</a>
-
-				
-			</form>
 		</div>
 	</div>
     </body>

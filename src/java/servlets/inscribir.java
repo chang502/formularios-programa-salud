@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.SendEmail;
 
 /**
  *
@@ -90,6 +91,7 @@ public class inscribir extends HttpServlet {
         String cualidades_especiales = request.getParameter("cualidades_especiales");
         String id_tipo_discapacidad = request.getParameter("id_tipo_discapacidad");
         String id_tipo_enfermedad = request.getParameter("id_tipo_enfermedad");
+        String id_disciplina_persona = request.getParameter("id_disciplina_persona");
         String id_disciplina = request.getParameter("id_disciplina");
         
         
@@ -105,7 +107,7 @@ public class inscribir extends HttpServlet {
 
             int id_estudiante_deportes = dbm.inscribir( cui,nov,nombre,apellido,fecha_nacimiento,sexo,
                     email,telefono,telefono_emergencia,contacto_emergencia,carrera,peso,estatura,
-                    cualidades_especiales,id_tipo_discapacidad,id_tipo_enfermedad,id_disciplina);
+                    cualidades_especiales,id_tipo_discapacidad,id_tipo_enfermedad, id_disciplina_persona,id_disciplina);
             
             
             
@@ -114,11 +116,12 @@ public class inscribir extends HttpServlet {
             if (id_estudiante_deportes>0) {
                 request.setAttribute("title", "Inscripción Satisfactoria");
                 request.setAttribute("message", "Su constancia de inscripción es: "+id_estudiante_deportes);
-                request.getRequestDispatcher("_r3sult___.jsp").include(request, response);
+                new SendEmail().sendAssignationConfirmationEmail(id_estudiante_deportes+"");
+                request.getRequestDispatcher("formularios/_r3sult___.jsp").include(request, response);
             } else {
                 request.setAttribute("title", "Ingreso Erróneo");
                 request.setAttribute("message", dbm.mensaje);
-                request.getRequestDispatcher("_r3sult___.jsp").include(request, response);
+                request.getRequestDispatcher("formularios/_r3sult___.jsp").include(request, response);
             }
             /*out.println("</body>");
             out.println("</html>");*/

@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.sql.*;
+import java.util.Properties;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -22,9 +23,9 @@ public class DBManager {
 
     static final String DRIVER = "org.mariadb.jdbc.Driver";
 
-    private static final String connectionstring = "jdbc:mariadb://localhost:3306/programasalud";
-    private static final String user = "root";
-    private static final String password = "progsalud";
+    private static String connectionstring;
+    private static String user;
+    private static String password;
 
     private static Connection conn;
 
@@ -32,15 +33,37 @@ public class DBManager {
     public String mensaje;
 
     public DBManager() {
+        loadProperties();
         connect();
     }
 
-    private static void connect() {
-        if (conn != null) {
-            //System.out.println("connection already created");
+    private static void loadProperties() {
+        if (connectionstring != null) {
             return;
         }
         try {
+            Properties prop = new Properties();
+            String conf_path=System.getenv("PROSALUD_CONFIG");
+            String db_conf_file=conf_path+java.io.File.separator+"database.properties";
+            //System.out.println(db_conf_file);
+            prop.load(new java.io.FileInputStream(db_conf_file));
+            connectionstring = prop.getProperty("connectionstring");
+            user = prop.getProperty("user");
+            password = prop.getProperty("password");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.err);
+        }
+    }
+
+    private static void connect() {
+
+        try {
+            /*if (conn != null && !conn.isClosed()) {
+                //System.out.println("connection already created");
+                return;
+            }*/
             //System.out.println("Creating the connection");
             Class.forName("org.mariadb.jdbc.Driver");
             conn = DriverManager.getConnection(connectionstring, user, password);
@@ -62,6 +85,10 @@ public class DBManager {
     
     public String getTiposEnfermedad() {
         return getOptionsForSelect("get_disease_types", "id_tipo_enfermedad", "nombre");
+    }
+    
+    public String getTiposDisciplina() {
+        return getOptionsForSelect("get_discipline_types", "id_disciplina_persona", "nombre");
     }
 
     public String getCarreras() {
@@ -112,7 +139,7 @@ public class DBManager {
     }
 
     public int inscribir(String cui, String nov, String nombre, String apellido, String fecha_nacimiento, String sexo, String email, String telefono, String telefono_emergencia,
-            String contacto_emergencia, String carrera, String peso, String estatura, String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad, String id_disciplina) {
+            String contacto_emergencia, String carrera, String peso, String estatura, String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad, String id_disciplina_persona, String id_disciplina) {
 
         try {
 
@@ -133,6 +160,7 @@ public class DBManager {
             params.put("flag_tiene_discapacidad", cualidades_especiales);
             params.put("id_tipo_discapacidad", id_tipo_discapacidad);
             params.put("id_tipo_enfermedad", id_tipo_enfermedad);
+            params.put("id_disciplina_persona", id_disciplina_persona);
             params.put("id_disciplina", id_disciplina);
 
             //System.out.println("carrera: " + params.get("carrera"));
@@ -141,8 +169,7 @@ public class DBManager {
                 "sexo", "email", "telefono", "telefono_emergencia", "contacto_emergencia",
                 "carrera", "peso", "estatura",
                 "flag_tiene_discapacidad",
-                "id_tipo_discapacidad",
-                "id_tipo_enfermedad",
+                "id_tipo_discapacidad", "id_tipo_enfermedad", "id_disciplina_persona",
                 "id_disciplina"};
 
             java.sql.CallableStatement result = callResultProcedure("assign_discipline", params, fields);
@@ -215,7 +242,7 @@ public class DBManager {
     public int actualizarDatosEstudiante(String carnet, String cui, String carrera,
             String fecha_nacimiento, String telefono, String telefono_emergencia,
             String contacto_emergencia, String peso, String estatura,
-            String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad) 
+            String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad, String id_disciplina_persona) 
     {
         try {
 
@@ -224,7 +251,7 @@ public class DBManager {
             String fields[] = {"nombre", "apellido", "fechanacimiento", "sexo", "correo", 
                         "cui", "nov", "usuarioid", "carrera", 
                         "telefono", "telefono_emergencia", "contacto_emergencia",
-                        "peso", "estatura","flag_tiene_discapacidad","id_tipo_discapacidad", "id_tipo_enfermedad"};
+                        "peso", "estatura","flag_tiene_discapacidad","id_tipo_discapacidad", "id_tipo_enfermedad", "id_disciplina_persona"};
 
             try {
                 HttpURLConnection con = utils.ConexionCentroCalculo.getEstudiante(carnet);
@@ -291,6 +318,7 @@ public class DBManager {
                         params.put("flag_tiene_discapacidad", cualidades_especiales);
                         params.put("id_tipo_discapacidad", id_tipo_discapacidad);
                         params.put("id_tipo_enfermedad", id_tipo_enfermedad);
+                        params.put("id_disciplina_persona", id_disciplina_persona);
 
                         
                         java.sql.CallableStatement result = callResultProcedure("registrar_datos_estudiante", params, fields);
@@ -336,6 +364,34 @@ public class DBManager {
         String query = "{ call " + procedure_name + "() }";
 
         CallableStatement stmt = conn.prepareCall(query);
+
+        if (stmt.execute()) {
+            return stmt.getResultSet();
+        }
+
+        return null;
+
+    }
+    
+   
+
+    public ResultSet callGetProcedure(String procedure_name, java.util.Map<String, String> params, String fields[]) throws Exception {
+
+        String param_list = "";
+        for (int i = 0; i < params.size(); i++) {
+            param_list += "?,";
+        }
+        if (params.size() > 0) {
+            param_list = param_list.substring(0, param_list.length() - 1);
+        }
+
+        String query = "{ call " + procedure_name + "(" + param_list + ") }";
+
+        CallableStatement stmt = conn.prepareCall(query);
+
+        for (int i = 0; i < fields.length; i++) {
+            stmt.setString(i + 1, params.get(fields[i]));
+        }
 
         if (stmt.execute()) {
             return stmt.getResultSet();

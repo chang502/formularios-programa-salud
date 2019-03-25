@@ -85,6 +85,7 @@ public class estudiante extends HttpServlet {
         String cualidades_especiales = request.getParameter("cualidades_especiales");
         String id_tipo_discapacidad = request.getParameter("id_tipo_discapacidad");
         String id_tipo_enfermedad = request.getParameter("id_tipo_enfermedad");
+        String id_disciplina_persona = request.getParameter("id_disciplina_persona");
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -94,7 +95,7 @@ public class estudiante extends HttpServlet {
 
             int id_persona = dbm.actualizarDatosEstudiante(carnet, cui, carrera, fecha_nacimiento, 
                     telefono, telefono_emergencia, contacto_emergencia, peso, estatura,
-                    cualidades_especiales, id_tipo_discapacidad, id_tipo_enfermedad);
+                    cualidades_especiales, id_tipo_discapacidad, id_tipo_enfermedad, id_disciplina_persona);
 
             if (id_persona > 0) {
                 out.println("<h1>Ingreso Satisfactorio</h1>");
@@ -102,7 +103,7 @@ public class estudiante extends HttpServlet {
             } else {
                 request.setAttribute("title", "Ingreso Erróneo");
                 request.setAttribute("message", dbm.mensaje);
-                request.getRequestDispatcher("_r3sult___.jsp").include(request, response);
+                request.getRequestDispatcher("formularios/_r3sult___.jsp").include(request, response);
             }
             /*out.println("</body>");
             out.println("</html>");*/
