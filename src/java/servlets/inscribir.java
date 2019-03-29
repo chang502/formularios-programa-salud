@@ -75,8 +75,12 @@ public class inscribir extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String cui = request.getParameter("cui");
-        String nov = request.getParameter("nov");
+        /*String cui = request.getParameter("cui");
+        String nov = request.getParameter("nov");*/
+        
+        String tipo_documento = request.getParameter("tipo_documento");
+        String documento = request.getParameter("documento");
+        
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String fecha_nacimiento = request.getParameter("fecha_nacimiento");
@@ -105,7 +109,7 @@ public class inscribir extends HttpServlet {
 
             utils.DBManager dbm = new utils.DBManager();
 
-            int id_estudiante_deportes = dbm.inscribir( cui,nov,nombre,apellido,fecha_nacimiento,sexo,
+            int id_estudiante_deportes = dbm.inscribir( tipo_documento,documento,nombre,apellido,fecha_nacimiento,sexo,
                     email,telefono,telefono_emergencia,contacto_emergencia,carrera,peso,estatura,
                     cualidades_especiales,id_tipo_discapacidad,id_tipo_enfermedad, id_disciplina_persona,id_disciplina);
             

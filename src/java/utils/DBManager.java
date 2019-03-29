@@ -138,14 +138,15 @@ public class DBManager {
         }
     }
 
-    public int inscribir(String cui, String nov, String nombre, String apellido, String fecha_nacimiento, String sexo, String email, String telefono, String telefono_emergencia,
+    public int inscribir(String tipo_documento, String documento, String nombre, String apellido, String fecha_nacimiento, String sexo, String email, String telefono, String telefono_emergencia,
             String contacto_emergencia, String carrera, String peso, String estatura, String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad, String id_disciplina_persona, String id_disciplina) {
 
         try {
 
             java.util.Map<String, String> params = new java.util.HashMap<>();
-            params.put("cui", cui);
-            params.put("nov", nov);
+            
+            params.put("carnet", tipo_documento.equals("carnet")?documento:null);
+            params.put("nov", tipo_documento.equals("nov")?documento:null);
             params.put("nombre", nombre);
             params.put("apellido", apellido);
             params.put("fecha_nacimiento", fecha_nacimiento);
@@ -165,7 +166,7 @@ public class DBManager {
 
             //System.out.println("carrera: " + params.get("carrera"));
 
-            String fields[] = {"cui", "nov", "nombre", "apellido", "fecha_nacimiento",
+            String fields[] = {"carnet", "nov", "nombre", "apellido", "fecha_nacimiento",
                 "sexo", "email", "telefono", "telefono_emergencia", "contacto_emergencia",
                 "carrera", "peso", "estatura",
                 "flag_tiene_discapacidad",

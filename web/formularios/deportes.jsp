@@ -44,13 +44,20 @@
                     <span class="contact100-form-title">
                         Asignación de Disciplina
                     </span>
-                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
-                        <span class="label-input100">CUI *</span>
-                        <input class="input100" type="number" min="1000000000000" max="9999999999999" name="cui" placeholder="CUI">
+                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100 input100-select">
+                        <span class="label-input100">Tipo documento *</span>
+                        <div>
+                            <select class="js-selectdisc" placeholder="Seleccione una opci&oacute;n" required name="tipo_documento">
+                                <option disabled selected value style="display:none">Seleccione</option>
+                                <option value="carnet">Carnet Estudiantil</option>
+                                <option value="nov">Número de Orientación Vocacional</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Ingrese la numeración del documento">
-                        <span class="label-input100">Número de Orientación Vocacional *</span>
-                        <input class="input100" type="number" min="2000000000" max="2999999999" name="nov" placeholder="Número de Orientación Vocacional">
+                        <span class="label-input100">Número de Documento *</span>
+                        <input class="input100" type="number" min="5000000" max="2999999999" name="documento" placeholder="Número de Orientación Vocacional">
                     </div>
 
 
