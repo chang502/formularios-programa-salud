@@ -26,6 +26,7 @@ public class DBManager {
     private static String connectionstring;
     private static String user;
     private static String password;
+    private static String encoding;
 
     private static Connection conn;
 
@@ -34,6 +35,7 @@ public class DBManager {
 
     public DBManager() {
         loadProperties();
+        loadWSProperties();
         connect();
     }
 
@@ -50,6 +52,26 @@ public class DBManager {
             connectionstring = prop.getProperty("connectionstring");
             user = prop.getProperty("user");
             password = prop.getProperty("password");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.err);
+        }
+    }
+    
+    
+    
+
+    private static void loadWSProperties() {
+        if (connectionstring != null) {
+            return;
+        }
+        try {
+            Properties prop = new Properties();
+            String conf_path=System.getenv("PROSALUD_CONFIG");
+            String db_conf_file=conf_path+java.io.File.separator+"database.properties";
+            prop.load(new java.io.FileInputStream(db_conf_file));
+            encoding = prop.getProperty("encodingread");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -200,7 +222,7 @@ public class DBManager {
         try {
 
             //java.io.InputStreamReader isr=new java.io.InputStreamReader(is,"UTF-8");
-            BufferedReader bfreader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            BufferedReader bfreader = new BufferedReader(new InputStreamReader(is, encoding));
 
             JsonReader reader = Json.createReader(bfreader);
             JsonObject jsonObject = reader.readObject();
@@ -219,7 +241,7 @@ public class DBManager {
         String resp = null;
 
         try {
-            java.io.InputStream is = new java.io.ByteArrayInputStream(raw.getBytes("UTF-8"));
+            java.io.InputStream is = new java.io.ByteArrayInputStream(raw.getBytes(encoding));
             JsonReader reader = Json.createReader(is);
 
             JsonArray jsonArray = reader.readArray();
@@ -266,7 +288,7 @@ public class DBManager {
                     String ws_response_carrera = getCcWsResponseMetadata(con.getInputStream());
                     String id_carrera = getFieldFromCcWsResponseMetadata(ws_response_carrera, "carrera");
 
-                    java.io.InputStream bais = new java.io.ByteArrayInputStream(ws_response.getBytes("UTF-8"));
+                    java.io.InputStream bais = new java.io.ByteArrayInputStream(ws_response.getBytes(encoding));
                     JsonReader reader = Json.createReader(bais);
 
                     JsonArray jsonArray = reader.readArray();

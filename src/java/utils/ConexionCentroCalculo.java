@@ -18,6 +18,10 @@ public class ConexionCentroCalculo {
     private static String user;
     private static String password;
     private static String url;
+    
+    
+    private static final String ENCODING="UTF-8";
+    
 
     private static void loadProperties() {
         if (url != null) {
@@ -51,7 +55,7 @@ public class ConexionCentroCalculo {
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             con.setRequestProperty("Cache-Control", "no-cache");
-            con.setRequestProperty("charset", "UTF-8");
+            con.setRequestProperty("charset", ENCODING);
             
             
             String strUser = user;
@@ -60,7 +64,7 @@ public class ConexionCentroCalculo {
             
             String strParametros = "";
             
-            strParametros = URLEncoder.encode("Carnet=" + numeroCarnet, "UTF-8");
+            strParametros = URLEncoder.encode("Carnet=" + numeroCarnet,ENCODING);
             
             String StrMetadata = "test";
             
@@ -101,6 +105,7 @@ public class ConexionCentroCalculo {
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             con.setRequestProperty("Cache-Control", "no-cache");
+            con.setRequestProperty("charset", ENCODING);
             
             String strUser = user;
             String strPassword = password;
@@ -108,7 +113,7 @@ public class ConexionCentroCalculo {
             
             String strParametros = "";
             
-            strParametros = URLEncoder.encode("CUI=" + cui, "UTF-8");
+            strParametros = URLEncoder.encode("CUI=" + cui, ENCODING);
             
             String StrMetadata = "test";
             
@@ -153,6 +158,7 @@ public class ConexionCentroCalculo {
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             con.setRequestProperty("Cache-Control", "no-cache");
+            con.setRequestProperty("charset", ENCODING);
             
             String strUser = user;
             String strPassword = password;
@@ -160,7 +166,7 @@ public class ConexionCentroCalculo {
             
             String strParametros = "";
             
-            strParametros = URLEncoder.encode("Carnet=" + carnet, "UTF-8");
+            strParametros = URLEncoder.encode("Carnet=" + carnet, ENCODING);
             
             String StrMetadata = "test";
             
