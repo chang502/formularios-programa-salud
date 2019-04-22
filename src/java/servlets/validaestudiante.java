@@ -36,7 +36,6 @@ public class validaestudiante extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String carnet=request.getParameter("carnet");
             if(carnet!=null && !carnet.equals("")){
-                System.out.println(carnet);
                 DBManager dm=new DBManager();
                 int resp=dm.validaEstudiante(carnet);
                 out.print(resp);
