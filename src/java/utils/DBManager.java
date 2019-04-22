@@ -45,8 +45,8 @@ public class DBManager {
         }
         try {
             Properties prop = new Properties();
-            String conf_path=System.getenv("PROSALUD_CONFIG");
-            String db_conf_file=conf_path+java.io.File.separator+"database.properties";
+            String conf_path = System.getenv("PROSALUD_CONFIG");
+            String db_conf_file = conf_path + java.io.File.separator + "database.properties";
             //System.out.println(db_conf_file);
             prop.load(new java.io.FileInputStream(db_conf_file));
             connectionstring = prop.getProperty("connectionstring");
@@ -58,9 +58,6 @@ public class DBManager {
             e.printStackTrace(System.err);
         }
     }
-    
-    
-    
 
     private static void loadWSProperties() {
         if (connectionstring != null) {
@@ -68,8 +65,8 @@ public class DBManager {
         }
         try {
             Properties prop = new Properties();
-            String conf_path=System.getenv("PROSALUD_CONFIG");
-            String db_conf_file=conf_path+java.io.File.separator+"database.properties";
+            String conf_path = System.getenv("PROSALUD_CONFIG");
+            String db_conf_file = conf_path + java.io.File.separator + "database.properties";
             prop.load(new java.io.FileInputStream(db_conf_file));
             encoding = prop.getProperty("encodingread");
 
@@ -104,11 +101,11 @@ public class DBManager {
     public String getTiposDocumento() {
         return getOptionsForSelect("get_student_document_types", "id_tipo_documento", "nombre");
     }
-    
+
     public String getTiposEnfermedad() {
         return getOptionsForSelect("get_disease_types", "id_tipo_enfermedad", "nombre");
     }
-    
+
     public String getTiposDisciplina() {
         return getOptionsForSelect("get_discipline_types", "id_disciplina_persona", "nombre");
     }
@@ -130,6 +127,31 @@ public class DBManager {
             return sb.toString();
         } catch (Exception e) {
             return "<option value=\"\"></option>\n";
+        }
+    }
+
+    public int validaEstudiante(String carnet) {
+        try {
+
+            
+            java.util.Map<String, String> params = new java.util.HashMap<>();
+
+            params.put("carnet", carnet);
+            
+            String fields[] = {"carnet"};
+
+            
+            
+            ResultSet rs = callGetProcedure("valida_estudiante", params, fields);
+
+            int resp = -1;
+            while (rs.next()) {
+                resp = rs.getInt("asignado");
+            }
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            return -1;
         }
     }
 
@@ -166,9 +188,9 @@ public class DBManager {
         try {
 
             java.util.Map<String, String> params = new java.util.HashMap<>();
-            
-            params.put("carnet", tipo_documento.equals("carnet")?documento:null);
-            params.put("nov", tipo_documento.equals("nov")?documento:null);
+
+            params.put("carnet", tipo_documento.equals("carnet") ? documento : null);
+            params.put("nov", tipo_documento.equals("nov") ? documento : null);
             params.put("nombre", nombre);
             params.put("apellido", apellido);
             params.put("fecha_nacimiento", fecha_nacimiento);
@@ -187,7 +209,6 @@ public class DBManager {
             params.put("id_disciplina", id_disciplina);
 
             //System.out.println("carrera: " + params.get("carrera"));
-
             String fields[] = {"carnet", "nov", "nombre", "apellido", "fecha_nacimiento",
                 "sexo", "email", "telefono", "telefono_emergencia", "contacto_emergencia",
                 "carrera", "peso", "estatura",
@@ -265,16 +286,15 @@ public class DBManager {
     public int actualizarDatosEstudiante(String carnet, String cui, String carrera,
             String fecha_nacimiento, String telefono, String telefono_emergencia,
             String contacto_emergencia, String peso, String estatura,
-            String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad, String id_disciplina_persona) 
-    {
+            String cualidades_especiales, String id_tipo_discapacidad, String id_tipo_enfermedad, String id_disciplina_persona) {
         try {
 
             java.util.Map<String, String> params = new java.util.HashMap<>();
 
-            String fields[] = {"nombre", "apellido", "fechanacimiento", "sexo", "correo", 
-                        "cui", "nov", "usuarioid", "carrera", 
-                        "telefono", "telefono_emergencia", "contacto_emergencia",
-                        "peso", "estatura","flag_tiene_discapacidad","id_tipo_discapacidad", "id_tipo_enfermedad", "id_disciplina_persona"};
+            String fields[] = {"nombre", "apellido", "fechanacimiento", "sexo", "correo",
+                "cui", "nov", "usuarioid", "carrera",
+                "telefono", "telefono_emergencia", "contacto_emergencia",
+                "peso", "estatura", "flag_tiene_discapacidad", "id_tipo_discapacidad", "id_tipo_enfermedad", "id_disciplina_persona"};
 
             try {
                 HttpURLConnection con = utils.ConexionCentroCalculo.getEstudiante(carnet);
@@ -326,13 +346,12 @@ public class DBManager {
                     fields[4] = "email";
                     fields[7] = "carnet";
 
-                    if (id_carrera.equals(carrera) 
-                        && params.get("cui").equals(cui)
-                        && params.get("carnet").equals(carnet)
-                        && params.get("fecha_nacimiento").equals(fecha_nacimiento)) 
-                    {
+                    if (id_carrera.equals(carrera)
+                            && params.get("cui").equals(cui)
+                            && params.get("carnet").equals(carnet)
+                            && params.get("fecha_nacimiento").equals(fecha_nacimiento)) {
                         //System.out.println("Información coincide, persona identificada");
-                        
+
                         params.put("telefono", telefono);
                         params.put("telefono_emergencia", telefono_emergencia);
                         params.put("contacto_emergencia", contacto_emergencia);
@@ -343,7 +362,6 @@ public class DBManager {
                         params.put("id_tipo_enfermedad", id_tipo_enfermedad);
                         params.put("id_disciplina_persona", id_disciplina_persona);
 
-                        
                         java.sql.CallableStatement result = callResultProcedure("registrar_datos_estudiante", params, fields);
 
                         int id_persona = result.getInt(fields.length + 1);
@@ -361,7 +379,7 @@ public class DBManager {
                         return this.id_asignacion;
 
                     } else {
-                        
+
                         this.mensaje = "Los datos ingresados no coinciden, revise su número de carnet, CUI, fecha de nacimiento y carrera. Si tiene asignadas varias carreras, seleccione una diferente.";
                     }
 
@@ -371,7 +389,7 @@ public class DBManager {
                     this.mensaje = "No es posible buscar los datos de estudiantes en este momento";
                 }
             } catch (Exception e) {
-                this.mensaje="Ocurrió un error: "+e.getMessage();
+                this.mensaje = "Ocurrió un error: " + e.getMessage();
                 e.printStackTrace(System.err);
             }
 
@@ -395,8 +413,6 @@ public class DBManager {
         return null;
 
     }
-    
-   
 
     public ResultSet callGetProcedure(String procedure_name, java.util.Map<String, String> params, String fields[]) throws Exception {
 
