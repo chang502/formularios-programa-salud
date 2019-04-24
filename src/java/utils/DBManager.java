@@ -26,7 +26,7 @@ public class DBManager {
     private static String connectionstring;
     private static String user;
     private static String password;
-    private static String encoding;
+    private static String encoding = "UTF-8";
 
     private static Connection conn;
 
@@ -35,7 +35,7 @@ public class DBManager {
 
     public DBManager() {
         loadProperties();
-        loadWSProperties();
+        //loadWSProperties();
         connect();
     }
 
@@ -54,27 +54,11 @@ public class DBManager {
             password = prop.getProperty("password");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace(System.err);
         }
     }
 
-    private static void loadWSProperties() {
-        if (connectionstring != null) {
-            return;
-        }
-        try {
-            Properties prop = new Properties();
-            String conf_path = System.getenv("PROSALUD_CONFIG");
-            String db_conf_file = conf_path + java.io.File.separator + "database.properties";
-            prop.load(new java.io.FileInputStream(db_conf_file));
-            encoding = prop.getProperty("encodingread");
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.err);
-        }
-    }
 
     private static void connect() {
 
@@ -253,7 +237,7 @@ public class DBManager {
             return metadata;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         return null;
     }
@@ -278,7 +262,7 @@ public class DBManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         return resp;
     }
@@ -307,7 +291,9 @@ public class DBManager {
                     con = utils.ConexionCentroCalculo.getEstudianteCarrera(carnet);
                     String ws_response_carrera = getCcWsResponseMetadata(con.getInputStream());
                     String id_carrera = getFieldFromCcWsResponseMetadata(ws_response_carrera, "carrera");
-
+                    
+                    //System.out.println("ws_response: "+ws_response);
+                    
                     java.io.InputStream bais = new java.io.ByteArrayInputStream(ws_response.getBytes(encoding));
                     JsonReader reader = Json.createReader(bais);
 

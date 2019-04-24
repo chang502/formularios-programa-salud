@@ -97,16 +97,10 @@ public class estudiante extends HttpServlet {
                     telefono, telefono_emergencia, contacto_emergencia, peso, estatura,
                     cualidades_especiales, id_tipo_discapacidad, id_tipo_enfermedad, id_disciplina_persona);
 
-            if (id_persona > 0) {
-                out.println("<h1>Ingreso Satisfactorio</h1>");
-                response.sendRedirect("success.jsp?id=" + id_persona);
-            } else {
-                request.setAttribute("title", "Ingreso Erróneo");
-                request.setAttribute("message", dbm.mensaje);
-                request.getRequestDispatcher("formularios/_r3sult___.jsp").include(request, response);
-            }
-            /*out.println("</body>");
-            out.println("</html>");*/
+            
+            request.setAttribute("title", (id_persona > 0?"Ingreso Satisfactorio":"Ingreso Erróneo"));
+            request.setAttribute("message", dbm.mensaje);
+            request.getRequestDispatcher("formularios/_r3sult___.jsp").include(request, response);
         } catch (Exception e) {
             e.printStackTrace(out);
         }
